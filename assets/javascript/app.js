@@ -2,62 +2,87 @@
 
 $(document).ready(function(){
     $("#question").hide();
-
     $("#start").on("click",initialize);
-
-
 })
-
-/*var trivia= $("<div>");
-trivia.addClass("questionBody");
-$(".questions").append(trivia);
-
-
-for(var i=0; i<length.question;i++){
-    $(".questions").text(question[i].q)
-    console.log(question[i].q)
-
-}
-*/
-
-
-
+var buttonTrue=0;
+var buttonFalse=0;
+var buttonFalse=0;
+var buttonTrue=0;
+var questionIndex=0;
 var correct=0;
 var incorrect=0;
-var unanswered=0;
-var time=120;
-var trivia={
-    questions:{q1:'who wears jearsey no 30?',
-                q2:'what position is steph curry?'
-                },
-    answers:{
-                 q1:'Steph Curry', 
-                    q2:'point guard'
-                },
-             
-opts:{ q1:['steph curry', 'dell curry'],
-
-             q2:['point-guard','shooting-guard']
-            
-            }
-
-
-};
-
+var questions=[{q:"Steph Curry wears jearsey no 30", a :"true"},
+                {q:"Golden State Warriors holds the record for most regular season wins", a:"true"},
+                {q:"Draymond Green was voted an All-Star for 2018-2019 NBA season ",a:"false"},
+                {q:"Golden State Warriors used to be San Francisco Warriors",a:"true"},
+                {q:"Lebron James was drafted by warriors before being traded to Cleaveland Cavialers",a:"false"},
+                {q:"Lebron Wants to play for GSW",a:"true"}
+                ];
+   
 
 function initialize(){
-
-
-    $("#question").show();
-    $("#question").text(trivia.questions.q1);
-
-    var radioBtnTrue = $('<input type="radio" name="rbtnCount" value="true" />');
-    radioBtnTrue.appendTo('#question');
-    var radioBtnFalse= $('<input type="radio" name="rbtnCount" value="false" />');
-    radioBtnFalse.appendTo('#question');
-
-    console.log(trivia.questions.q1)
-    console.log(trivia.opts.q1)
-    $("#start").hide();
-
+    $("#start").hide();//hides the start button
+    $("#question").show();//pop up div for question
+    renderQuestion();
 };
+
+
+function renderQuestion(){
+    if(questionIndex<=questions.length-1){
+        $("#question").text(questions[questionIndex].q)
+        buttonTrue =$("<button>True</button>");
+        buttonTrue.val("true");
+        $("#question").append(buttonTrue);
+        buttonFalse = $("<button>False</button>");
+        buttonFalse.val("false");
+        $("#question").append(buttonFalse);
+        correctt();
+    }
+    else{
+        $("#question").html("You Got "+correct+ " Right and " + incorrect + " Wrong");
+       
+    }
+}
+    
+
+
+    function correctt(){//determines if the answer is correct or not and iterates the counter
+        var ansValue= $(buttonTrue).val();
+        var ansValue1=$(buttonFalse).val();
+        buttonTrue.on("click",function(){//if the answer is true and buttonTrue is pressed
+    
+    
+            if(ansValue===questions[questionIndex].a){
+                correct++;
+                questionIndex++;
+                console.log(correct);
+                renderQuestion();
+            }
+            else{
+                incorrect++;
+                questionIndex++;
+                renderQuestion();
+                console.log(incorrect);
+                console.log(questionIndex);
+            }
+        })
+
+        buttonFalse.on("click",function(){ //if the answer is false and the buttonFalse is pressed
+            if(ansValue1===questions[questionIndex].a){
+                correct++;
+                questionIndex++;
+                console.log(correct);
+                renderQuestion();
+            }
+            else{
+                incorrect++;
+                questionIndex++;
+                renderQuestion();
+            }
+        })
+
+    };
+
+   
+    
+

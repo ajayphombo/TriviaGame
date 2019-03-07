@@ -30,9 +30,10 @@ h1{
 }
 
 #question{
-
+    padding-top:10%;
     background-color:rgb(4,43,189);
     height: 100vh;
     color:gold;
     text-align:center;
+    font-size: 25px;
 }
